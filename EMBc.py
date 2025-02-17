@@ -18,7 +18,7 @@ with open('DMDweights.csv', mode='r') as file:
 times = []
 dmds = []
 offset_nums = []
-folder = '20_Dec_2024_minus_x'
+folder = '20_Jan_plus_y'
 for name in os.listdir(folder):
     path = os.path.join(folder,name)
     if os.path.isfile(path):
@@ -117,6 +117,8 @@ for elem in output_response:
     new_indices = np.linspace(0, len(out_adjusted)-1, new_length)
     expanded_out = np.interp(new_indices, np.arange(len(out_adjusted)), out_adjusted)
     # Change index on positive_frequencies in next line to -5 for 3 GHz-averaged series
+    #print(len(np.arange(len(out_adjusted))))
+    #print(len(positive_frequencies[:-4]))
     expanded_positive_frequencies = np.interp(new_indices, np.arange(len(out_adjusted)), positive_frequencies[:-1])
     plt.plot(expanded_positive_frequencies/1e6, expanded_out,color = colors[color_count],label=f'Series {i}')
     initial = out_adjusted[0]
@@ -132,14 +134,16 @@ for elem in output_response:
             break
         else:
             count += 1
+            #print('not found')
     color_count += 1
 plt.legend()
 plt.grid(True)
 plt.xlim(0,8000)
+plt.title('EMBC: 20 Jan (plus y)')
 plt.xlabel('Frequency (MHz)')
 plt.ylabel('Amplitude (dB)')
 plt.ylim(10,20)
-plt.savefig('gaussian_transfer_function.png',dpi=300)
+plt.savefig('20_Jan_plus_y_gaussian_transfer_function.png',dpi=300)
 plt.clf()
 
 weights = np.array(vcsel_weights)
